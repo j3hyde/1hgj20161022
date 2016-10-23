@@ -6,6 +6,26 @@
  *
  * Copyright 2016 Jeffrey Kyllo
  */
+function relMouseCoords(event){
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = this;
+
+    do{
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    }
+    while(currentElement = currentElement.offsetParent)
+
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
+
+    return {x:canvasX, y:canvasY}
+}
+HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
+
 function rungame(target) {
     var Vector2 = function(x, y) {
         this.x = x || 0;
@@ -62,7 +82,8 @@ function rungame(target) {
     var canvas = document.getElementById(target);
 
     canvas.onclick = function(e) {
-        game.click(e.clientX, e.clientY);
+        coords = canvas.relMouseCoords(e);
+        game.click(coords.x, coords.y);
     };
 
     var ctx = canvas.getContext("2d");
