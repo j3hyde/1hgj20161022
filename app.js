@@ -1,3 +1,11 @@
+/*
+ * Get the Lime (Stone)!
+ *
+ * Click on the map to move your game piece and touch the blocks to collect
+ * them.  It's rather simple so there is no loading screen, no win state, etc.
+ *
+ * Copyright 2016 Jeffrey Kyllo
+ */
 function rungame(target) {
     var Vector2 = function(x, y) {
         this.x = x || 0;
